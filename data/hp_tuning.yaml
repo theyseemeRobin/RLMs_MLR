@@ -1,0 +1,58 @@
+# n_trials : int_value
+#
+# set:
+#     #These are constant across all trials
+#     name : set_value
+#
+# tunable:
+#     # These are the values to tune over `n_trials`. Any number of hyperparameters can be defined.
+#     # Specify sampling information. will results in a call like trial.suggest_<type>(name, **arguments).
+#     # Where trial is an optuna trial. To see available suggest functions, refer to
+#     # https://optuna.readthedocs.io/en/stable/reference/generated/optuna.trial.Trial.html.
+#
+#     name_1:
+#         type : type
+#         arguments:
+#             argument1 : value
+#             argument2 : value
+
+# Example config:
+
+n_trials : 100
+
+set:
+    model : roberta-base
+    test_batch_size : 16
+    context_window  : 256
+    n_epochs: 20
+
+tunable:
+    learning_rate:
+        min  : 0.000001
+        max  : 0.001
+        type : float
+        log : True
+
+    weight_decay:
+        min  : 0.001
+        max  : 0.1
+        type : float
+        log : True
+
+    freeze_weights:
+        min  : 0
+        max  : 1
+        type : int
+        log : False
+
+    batch_size:
+        min  : 4
+        max  : 64
+        type : int
+        log  : False
+
+    warmup_fraction:
+        min  : 0
+        max  : 0.5
+        type : float
+        log  : False

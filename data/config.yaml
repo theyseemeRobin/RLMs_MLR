@@ -1,0 +1,10 @@
+n_trials : 40
+set:
+    example_set : this is a set value
+tunable:
+    some_tunable:
+        type : float
+        arguments :
+            low  : 0
+            high  : 1
+            log : False
