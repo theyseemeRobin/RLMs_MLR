@@ -31,7 +31,7 @@ def config_from_trial(hyperparameters, trial):
     hyperparameters : dict
         A hyperparameter config.
     """
-    run_config = hyperparameters.get('set') if hyperparameters.get('set') is not None else {}
+    run_config = hyperparameters.get('set', {})
     for hp_name, hp_info in hyperparameters['tunable'].items():
         suggest_func = getattr(trial, f"suggest_{hp_info['type']}")
         if suggest_func is not None and callable(suggest_func):
@@ -58,11 +58,11 @@ def main(run_config, trial=None, save_dir=None, device='cuda' if torch.cuda.is_a
     typing.Union[float, tuple]
     """
 
-    tuning = trial is not None
-    run_config = config_from_trial(run_config, trial) if tuning else run_config
-    tag = f"Tuning trial {trial.number}" if tuning else "Post tuning"
+    is_tuning = trial is not None
+    run_config = config_from_trial(run_config, trial) if is_tuning else run_config
+    tag = f"Tuning trial {trial.number}" if is_tuning else "Post tuning"
 
-    if tuning:  # Return tuning objective
+    if is_tuning:  # Return tuning objective
         return 0
     else:  # Return results
         return [], []

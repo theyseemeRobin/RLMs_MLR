@@ -28,31 +28,36 @@ set:
 
 tunable:
     learning_rate:
-        min  : 0.000001
-        max  : 0.001
         type : float
-        log : True
+        arguments:
+            low  : 0.000001
+            high  : 0.001
+            log : True
 
     weight_decay:
-        min  : 0.001
-        max  : 0.1
         type : float
-        log : True
+        arguments:
+            low  : 0.001
+            high  : 0.1
+            log : True
 
     freeze_weights:
-        min  : 0
-        max  : 1
         type : int
-        log : False
+        arguments:
+            low  : 0
+            high  : 1
+            log : False
 
     batch_size:
-        min  : 4
-        max  : 64
         type : int
-        log  : False
+        arguments:
+            low  : 4
+            high  : 64
+            log  : False
 
     warmup_fraction:
-        min  : 0
-        max  : 0.5
         type : float
-        log  : False
+        arguments:
+            low  : 0
+            high  : 0.5
+            log  : False
