@@ -1,0 +1,5 @@
+# @package _global_
+defaults:
+    - override /evaluate: fashion_mnist
+    - override /train: fashion_mnist
+    - override /visualize: fashion_mnist

@@ -1,0 +1,5 @@
+defaults:
+    - base_train
+
+
+datapath: /path/to/fashionmnist

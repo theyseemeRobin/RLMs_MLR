@@ -1,0 +1,18 @@
+defaults:
+    - base_config
+    - _self_
+    - train: base_train
+    - evaluate: base_evaluate
+    - visualize: base_visualize
+    - system: base_system
+    - override hydra/sweeper: optuna
+    - override hydra/sweeper/sampler: tpe
+
+hydra:
+    job:
+        chdir: true
+    sweep:
+        dir: results/multirun_${now:%Y-%m-%d_%H-%M-%S}
+        subdir: ${hydra.job.num}
+    run:
+        dir: results/${now:%Y-%m-%d_%H-%M-%S}

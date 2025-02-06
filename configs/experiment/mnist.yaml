@@ -1,0 +1,5 @@
+# @package _global_
+defaults:
+    - override /evaluate: mnist
+    - override /train: mnist
+    - override /visualize: mnist
