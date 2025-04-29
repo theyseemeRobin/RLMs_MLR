@@ -1,0 +1,5 @@
+_target_: torch.optim.AdamW
+params:
+    - _target_: torch.nn.Parameter
+lr: 0.001
+weight_decay: 0.0

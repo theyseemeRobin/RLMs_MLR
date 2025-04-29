@@ -1,4 +1,0 @@
-defaults:
-    - base_evaluate
-
-datapath: /path/to/fashionmnist

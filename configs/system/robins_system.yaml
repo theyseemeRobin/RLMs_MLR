@@ -1,5 +1,0 @@
-defaults:
-    - base_system
-
-device: cuda
-log_path: robins_log_path
