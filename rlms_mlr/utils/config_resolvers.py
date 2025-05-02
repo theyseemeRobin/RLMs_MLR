@@ -4,6 +4,14 @@ import dotenv
 import torch
 
 def register_resolver(name: str,):
+    """
+    Decorator to register a custom OmegaConf resolver.
+    Args:
+        name: The name of the resolver to register.
+
+    Returns: None
+
+    """
     def decorator(resolver_func):
         OmegaConf.register_new_resolver(name, resolver_func)
         return resolver_func
@@ -11,9 +19,14 @@ def register_resolver(name: str,):
 
 
 @register_resolver("from_dotenv")
-def from_env_resolver(env_var: str):
+def from_env_resolver(env_var: str) -> str:
     """
     Custom OmegaConf resolver to get environment variables.
+    Args:
+        env_var: Name of the environment variable to retrieve.
+
+    Returns: value of the environment variable
+
     """
     logging.info(f"Opening .env file to get variable '{env_var}'")
     dotenv.load_dotenv()
@@ -24,9 +37,15 @@ def from_env_resolver(env_var: str):
 
 
 @register_resolver("get_device")
-def get_device_resolver(device: str):
+def get_device_resolver(device: str) -> str:
     """
     Custom OmegaConf resolver to validate the device.
+
+    Args:
+        device: The device to use, either 'cuda' or 'cpu'.
+
+    Returns: The validated device string.
+
     """
     if device == "cuda":
         if not torch.cuda.is_available():
