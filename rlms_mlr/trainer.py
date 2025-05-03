@@ -6,8 +6,8 @@ import torch
 from torch.amp import autocast
 from typing import Any, Optional, Callable, Union, Sequence, Iterable, List
 
-from build.lib.rlms_mlr.callbacks.logging import LoggerCallback
-from build.lib.rlms_mlr.callbacks.progress_bar import RichProgressCallback
+from rlms_mlr.callbacks.logging import LoggerCallback
+from rlms_mlr.callbacks.progress_bar import RichProgressCallback
 from rlms_mlr.augmentation.augmentation_pipeline import AugmentationPipeline
 from rlms_mlr.callbacks.base_callback import Callback, TrainerState, Logs, CallbackList
 from rlms_mlr.callbacks.eval_callback import EvalCallback
