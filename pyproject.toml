@@ -13,7 +13,6 @@ dependencies = [
     "mlflow>=2.22.0",
     "optuna>=2.10.1",
     "optuna-dashboard==0.4",
-    "optuna-fast-fanova>=0.0.4",
     "platformdirs>=4.3.7",
     "psycopg2>=2.9.10",
     "pytest>=8.3.5",
