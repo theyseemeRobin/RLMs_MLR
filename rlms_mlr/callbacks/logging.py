@@ -12,7 +12,7 @@ class LoggerCallback(Callback):
     Args:
         logger: An implementation of the Logger interface.
         params: Hyperparameters dict to log once at train start.
-        checkpoint_dir: Directory where checkpoints will be saved.
+        log_dir: Directory where checkpoints will be saved.
         save_best_only: If True, only save when eval_loss improves.
     """
 
@@ -20,12 +20,12 @@ class LoggerCallback(Callback):
             self,
             logger: Logger,
             params: Dict[str, any],
-            checkpoint_dir: str,
+            log_dir: str,
             save_best_only: bool = True
     ):
         self.logger = logger
         self.params = params
-        self.checkpoint_dir = checkpoint_dir
+        self.checkpoint_dir = log_dir
         self.save_best_only = save_best_only
         self.best_loss = float('inf')
 
