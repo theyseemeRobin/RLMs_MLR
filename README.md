@@ -1,4 +1,4 @@
-y![alt text](assets/banner.png)
+![alt text](assets/banner.png)
 
 # R.L.M's Machine Learning Recipe
 Welcome to this incredible repo! With this module, you can utilize my code, which may not be the best, to write your 
