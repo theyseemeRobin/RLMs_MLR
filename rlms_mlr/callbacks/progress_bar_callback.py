@@ -47,7 +47,7 @@ class RichProgressCallback(Callback):
         progress = Progress(
             TextColumn("[bold blue]{task.description}"),
             SpinnerColumn(),
-            BarColumn(bar_width=40),
+            BarColumn(bar_width=None),
             TextColumn("{task.completed}/{task.total}"),
             TimeElapsedColumn(),
             TimeRemainingColumn(),
