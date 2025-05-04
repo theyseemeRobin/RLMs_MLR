@@ -1,10 +1,13 @@
 from abc import ABC
-from dataclasses import dataclass
-from typing import List, Optional, Dict
+from dataclasses import dataclass, field
+from typing import List, Optional, Dict, Union
+from PIL import Image
 from torch import optim
 
 from rlms_mlr.data import DataModule
+from rlms_mlr.loggers.base_logger import LogMetric
 from rlms_mlr.models.base_model import Model
+
 
 
 @dataclass
@@ -25,12 +28,12 @@ class TrainerState:
     model: Model
     optimizer: optim.Optimizer
     data_module: DataModule
-    total_epochs: int
     total_training_batches: int
-    current_epoch: int
-    current_batch: int
+    total_epochs: int = 0
+    current_epoch: int = 0
+    current_batch: int = 0
     stop_training: bool = False
-    logs: Dict[str, float] = None
+    logs: Dict[str, LogMetric] = field(default_factory=dict)
 
 
 @dataclass
@@ -159,7 +162,7 @@ class CallbackList(Callback):
     def __init__(self, callbacks: List[Callback] = None):
         """
         Initialize the CallbackList with a list of callbacks. The callbacks are called in sequential order based on
-        their priority.
+        their priority, with higher priority callbacks being called first.
 
         Args:
             callbacks: A list of Callback instances.
@@ -173,9 +176,11 @@ class CallbackList(Callback):
 
     def sort_callbacks(self):
         """
-        Sort the callbacks in the list based on their priority.
+        Sort the callbacks in the list based on their priority. The higher the priority, the earlier the callback is
+        called.
         """
-        self.callbacks = sorted(self.callbacks, key=lambda c: c.priority)
+        self.callbacks = sorted(self.callbacks, key=lambda c: c.priority, reverse=True)
+
 
     def add_callback(self, callback: Callback):
         """
