@@ -36,14 +36,14 @@ class LoggerCallback(Callback):
         for name, value in trainer_state.logs.items():
             self.logger.log_metric(name, value, step=trainer_state.current_epoch)
 
-        # Optionally save model if eval_loss improved
-        eval_loss = trainer_state.logs.eval_loss
-        if eval_loss is not None:
-            if not self.save_best_only or eval_loss < self.best_loss:
-                self.best_loss = eval_loss
-                os.makedirs(self.checkpoint_dir, exist_ok=True)
-                ckpt_path = os.path.join(self.checkpoint_dir, f'best_epoch_{trainer_state.current_epoch}.pt')
-                self.logger.save_model(trainer_state.model, ckpt_path)
+        # TODO: fix model saving
+        # eval_loss = trainer_state.logs.eval_loss
+        # if eval_loss is not None:
+        #     if not self.save_best_only or eval_loss < self.best_loss:
+        #         self.best_loss = eval_loss
+        #         os.makedirs(self.checkpoint_dir, exist_ok=True)
+        #         ckpt_path = os.path.join(self.checkpoint_dir, f'best_epoch_{trainer_state.current_epoch}.pt')
+        #         self.logger.save_model(trainer_state.model, ckpt_path)
 
     def on_train_end(self, trainer_state: TrainerState, **kwargs) -> None:
         self.logger.close()

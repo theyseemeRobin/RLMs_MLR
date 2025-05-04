@@ -9,7 +9,7 @@ from typing import Any, Optional, Callable, Union, Sequence, Iterable, List
 from rlms_mlr.callbacks.logging import LoggerCallback
 from rlms_mlr.callbacks.progress_bar import RichProgressCallback
 from rlms_mlr.augmentation.augmentation_pipeline import AugmentationPipeline
-from rlms_mlr.callbacks.base_callback import Callback, TrainerState, Logs, CallbackList
+from rlms_mlr.callbacks.base_callback import Callback, TrainerState, CallbackList
 from rlms_mlr.callbacks.eval_callback import EvalCallback
 from rlms_mlr.data.data_module import DataModule
 from rlms_mlr.data.dataset import Batch
@@ -203,20 +203,9 @@ class Trainer:
                 self.trainer_context.current_batch = batch_idx
                 self._callback("on_train_batch_start")
 
-                batch_prepared = self._prepare_batch(batch)
-                with autocast("cuda", enabled=self.use_amp):
-                    loss = self.model.compute_loss(batch_prepared)
-                self.scaler.scale(loss).backward()
-                if self.gradient_clip_norm:
-                    self.scaler.unscale_(self.optimizer)
-                    torch.nn.utils.clip_grad_norm_(self.model.parameters(), self.gradient_clip_norm)
-                self.scaler.step(self.optimizer)
-                self.scaler.update()
-                self.optimizer.zero_grad()
-                if self.lr_scheduler:
-                    self.lr_scheduler.step()
+                loss = self.train_step(batch)
+                self.trainer_context.logs = {"train_loss": loss}
 
-                self.trainer_context.logs = Logs(loss=loss)
                 self._callback("on_train_batch_end")
 
             self._callback("on_epoch_end")
@@ -224,3 +213,19 @@ class Trainer:
             if self.trainer_context.stop_training:
                 break
         self._callback("on_train_end")
+
+    def train_step(self, batch: Batch):
+        processed_batch = self._prepare_batch(batch)
+        with autocast("cuda", enabled=self.use_amp):
+            loss = self.model.compute_loss(processed_batch)
+        self.scaler.scale(loss).backward()
+        if self.gradient_clip_norm:
+            self.scaler.unscale_(self.optimizer)
+            torch.nn.utils.clip_grad_norm_(self.model.parameters(), self.gradient_clip_norm)
+        self.scaler.step(self.optimizer)
+        self.scaler.update()
+        self.optimizer.zero_grad()
+        if self.lr_scheduler:
+            self.lr_scheduler.step()
+
+        return loss.item()

@@ -1,42 +1,10 @@
 from abc import ABC
-from dataclasses import dataclass, field, fields
-from typing import List, Iterator, Tuple, Optional, Dict, Any
-from torch import nn, optim
+from dataclasses import dataclass
+from typing import List, Optional, Dict
+from torch import optim
 
 from rlms_mlr.data import DataModule
 from rlms_mlr.models.base_model import Model
-
-
-@dataclass
-class Logs:
-    """
-    Logs object to store training and evaluation losses. Arbitrary extra data can be added as well.
-
-    Attributes:
-        eval_loss: Optional[float]: Evaluation loss. This is used in various callbacks. Not providing this value may
-                                    stop some callbacks from working (e.g. EarlyStopping).
-        extra: Dict[str, Any]: Arbitrary values that can be added to the logs (e.g., training loss).
-    """
-    eval_loss: Optional[float] = None
-    extra: Dict[str, Any] = field(default_factory=dict)
-
-    def __init__(
-        self,
-        eval_loss: Optional[float] = None,
-        **extra: Any,
-    ) -> None:
-        self.eval_loss = eval_loss
-        self.extra = extra
-        for key, value in extra.items():
-            setattr(self, key, value)
-
-    def items(self) -> Iterator[Tuple[str, Any]]:
-        for f in fields(self):
-            if f.name == "extra":
-                continue
-            yield f.name, getattr(self, f.name)
-        for k, v in self.extra.items():
-            yield k, v
 
 
 @dataclass
@@ -62,7 +30,7 @@ class TrainerState:
     current_epoch: int
     current_batch: int
     stop_training: bool = False
-    logs: Optional[Logs] = None
+    logs: Dict[str, float] = None
 
 
 @dataclass
