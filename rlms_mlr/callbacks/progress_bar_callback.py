@@ -1,8 +1,10 @@
+import builtins
+
+import rich
 from tqdm import tqdm
-from rich.progress import Progress, BarColumn, TextColumn, TimeRemainingColumn
+from rich.progress import Progress, BarColumn, TextColumn, TimeRemainingColumn, SpinnerColumn, TimeElapsedColumn, TaskProgressColumn
 
 from rlms_mlr.callbacks.base_callback import Callback, TrainerState
-
 
 
 class TqdmProgressCallback(Callback):
@@ -36,7 +38,7 @@ class RichProgressCallback(Callback):
     """
     priority = 0
     def __init__(self, **bar_kwargs):
-        self.progress = None
+        self.progress: rich.progress.Progress = None
         self.task_id = None
         self.bar_kwargs = bar_kwargs
 
@@ -44,18 +46,18 @@ class RichProgressCallback(Callback):
         total_batches = trainer_state.total_epochs * trainer_state.total_training_batches
         progress = Progress(
             TextColumn("[bold blue]{task.description}"),
-            BarColumn(),
+            SpinnerColumn(),
+            BarColumn(bar_width=40),
             TextColumn("{task.completed}/{task.total}"),
+            TimeElapsedColumn(),
             TimeRemainingColumn(),
-            expand=True,
             **self.bar_kwargs
         )
         self.progress = progress.__enter__()
-        self.task_id = self.progress.add_task("Training (rich)", total=total_batches)
+        self.task_id = self.progress.add_task("Training", total=total_batches)
 
     def on_train_batch_end(self, trainer_state: TrainerState, **kwargs) -> None:
-        self.progress.update(self.task_id, advance=1, update=True)
-        self.progress.refresh()
+        self.progress.update(self.task_id, advance=1, update=True, refresh=True)
 
     def on_train_end(self, trainer_state: TrainerState, **kwargs) -> None:
         self.progress.__exit__(None, None, None)
