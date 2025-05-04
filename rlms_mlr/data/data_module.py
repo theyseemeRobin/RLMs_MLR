@@ -1,10 +1,10 @@
 import logging
-from typing import Dict, Union, Optional, Iterator
+from typing import Optional, Iterator
 
 import torch
-from torch.utils.data import DataLoader, Dataset
+from torch.utils.data import DataLoader
 
-from rlms_mlr.data.dataset import Batch
+from rlms_mlr.data.dataset import Batch, BaseDataset
 
 
 class DataModule:
@@ -21,9 +21,9 @@ class DataModule:
     """
     def __init__(
         self,
-        train_dataset: Dataset,
-        val_dataset: Dataset,
-        test_dataset: Dataset,
+        train_dataset: BaseDataset,
+        val_dataset: BaseDataset,
+        test_dataset: BaseDataset,
         **dataloader_kwargs,
     ) -> None:
         self.train_dataset = train_dataset
@@ -35,7 +35,7 @@ class DataModule:
     @classmethod
     def from_dataset(
         cls,
-        dataset: Dataset,
+        dataset: BaseDataset,
         train_split: float = 0.8,
         val_split: float = 0.2,
         test_split: float = 0,
@@ -59,16 +59,13 @@ class DataModule:
         if not abs(sum(splits) - 1.0) < 1e-6:
             raise ValueError("train/val/test splits must sum to 1.0")
 
-        train_size = int(len(dataset) * train_split)
-        val_size = int(len(dataset) * val_split)
-        test_size = len(dataset) - train_size - val_size
-        logging.debug(f"Train size: {train_size}, val: {val_size}, test: {test_size}")
+        logging.debug(f"Train split: {train_split}, val split: {val_split}, test split: {test_split}")
 
         gen = torch.Generator().manual_seed(split_seed)
 
         train_dataset, val_dataset, test_dataset = torch.utils.data.random_split(
             dataset,
-            [train_size, val_size, test_size],
+            [train_split, val_split, test_split],
             generator=gen,
         )
         return cls(
@@ -78,7 +75,7 @@ class DataModule:
             **dataloader_kwargs,
         )
 
-    def _make_data_loader(self, dataset: Dataset, caller: str, **data_loader_kwargs) -> Optional[DataLoader]:
+    def _make_data_loader(self, dataset: BaseDataset, caller: str, **data_loader_kwargs) -> DataLoader:
         """
         Create a DataLoader for the given dataset.
 
@@ -91,15 +88,14 @@ class DataModule:
             DataLoader: The DataLoader for the dataset.
         """
         if dataset is None:
-            logging.warning(f"Dataset is empty (called from {caller}). DataLoader will not be created.")
-            return None
+            raise ValueError(f"Dataset is empty (called from {caller}) - cannot create DataLoader.")
         merged_kwargs = {**self.dataloader_kwargs, **data_loader_kwargs}
         return DataLoader(
             dataset,
             **merged_kwargs,
         )
 
-    def train_dataloader(self, **data_loader_kwargs) -> Optional[Iterator[Batch]]:
+    def train_dataloader(self, **data_loader_kwargs) -> DataLoader:
         """
         Create a DataLoader for the training dataset.
 
@@ -108,7 +104,7 @@ class DataModule:
         """
         return self._make_data_loader(self.train_dataset, "train_dataloader", **data_loader_kwargs)
 
-    def val_dataloader(self, **data_loader_kwargs) -> Optional[Iterator[Batch]]:
+    def val_dataloader(self, **data_loader_kwargs) -> DataLoader:
         """
         Create a DataLoader for the validation dataset.
 
@@ -117,7 +113,7 @@ class DataModule:
         """
         return self._make_data_loader(self.val_dataset, "val_dataloader", **data_loader_kwargs)
 
-    def test_dataloader(self, **data_loader_kwargs) -> Optional[Iterator[Batch]]:
+    def test_dataloader(self, **data_loader_kwargs) -> DataLoader:
         """
         Create a DataLoader for the test dataset.
 

@@ -40,7 +40,17 @@ class Batch(dict):
         return self.__class__(**{key: value.to(device, **kwargs) for key, value in self.items()})
 
 
-class LocalDataset(Dataset, ABC):
+class BaseDataset(Dataset, ABC):
+
+    @abstractmethod
+    def __getitem__(self, item) -> Batch: ...
+
+    @abstractmethod
+    def __len__(self) -> int: ...
+
+
+
+class LocalDataset(BaseDataset, ABC):
     """
     Base class for local datasets. By providing a download source, the dataset can be downloaded and stored
     upon initialization. If the dataset is already present, it will be used directly.
