@@ -4,7 +4,7 @@ import plotext as plt
 from rlms_mlr.loggers.stdout_logger import StdOutLogger
 
 
-class StdOutGrapher(StdOutLogger):
+class PlotextLogger(StdOutLogger):
     """
     Logger that renders real-time scalar graphs in the terminal using plotext.
     """

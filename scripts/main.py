@@ -7,7 +7,7 @@ from omegaconf import DictConfig, OmegaConf
 
 from rlms_mlr.callbacks.logging_callback import LoggerCallback
 from rlms_mlr.loggers.tensorboard_logger import TensorBoardLogger
-from rlms_mlr.loggers.terminal_grapher import StdOutGrapher
+from rlms_mlr.loggers.plotext_logger import PlotextLogger
 from rlms_mlr.trainer import Trainer
 
 
@@ -20,7 +20,7 @@ def main(cfg: DictConfig):
 
     trainer: Trainer = instantiate(cfg.trainer)
     trainer.add_callback(LoggerCallback(TensorBoardLogger(cfg.log_dir), OmegaConf.to_container(cfg)))
-    trainer.add_callback(LoggerCallback(StdOutGrapher(['train_loss', 'val_loss', 'val_accuracy']),
+    trainer.add_callback(LoggerCallback(PlotextLogger(['train_loss', 'val_loss', 'val_accuracy']),
                                         OmegaConf.to_container(cfg)))
     trainer.train(**cfg.train_kwargs)
 
