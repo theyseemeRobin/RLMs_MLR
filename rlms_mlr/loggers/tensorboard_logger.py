@@ -1,8 +1,12 @@
 import logging
 from pathlib import Path
 from typing import Dict, Any
+import pprint
 
+import numpy as np
 import torch
+import yaml
+from PIL import Image
 from torch.utils.tensorboard import SummaryWriter
 
 from rlms_mlr.loggers.base_logger import Logger
@@ -21,12 +25,20 @@ class TensorBoardLogger(Logger):
         self.writer = SummaryWriter(str(log_dir))
         logging.info(f"TensorBoard logs will be saved to {log_dir}")
 
-    def log_metric(self, name: str, value: float, step: int) -> None:
+    def log_float(self, name: str, value: float, step: int) -> None:
         self.writer.add_scalar(name, value, step)
 
-    def log_hyperparameters(self, params: Dict[str, Any]) -> None:
-        for k, v in params.items():
-            self.writer.add_text(f'param/{k}', str(v), 0)
+    def log_string(self, name: str, value: str, step: int):
+        self.writer.add_text(name, value, step)
+
+    def log_image(self, name: str, value: Image.Image, step: int) -> None:
+        rgb_value = value.convert("RGB")
+        tensor_img = torch.from_numpy(np.array(rgb_value)).permute(2, 0, 1)
+        self.writer.add_image(name, tensor_img, step)
+
+    def log_config(self, cfg: Dict[str, Any]) -> None:
+        yaml_str = yaml.dump(cfg)
+        self.writer.add_text('config', yaml_str, 0)
 
     def save_model(self, model: torch.nn.Module, path: Path) -> None:
         torch.save(model.state_dict(), path)

@@ -18,7 +18,7 @@ class WandbLogger(Logger):
     ) -> None:
         self.run = wandb.init(project=project, entity=entity, config=config)
 
-    def log_hyperparameters(self, params: Dict[str, Any]) -> None:
+    def log_config(self, params: Dict[str, Any]) -> None:
         wandb.config.update(params)
 
     def log_metric(self, name: str, value: float, step: int) -> None:

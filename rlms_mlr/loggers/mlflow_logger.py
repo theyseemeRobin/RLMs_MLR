@@ -20,7 +20,7 @@ class MLflowLogger(Logger):
         mlflow.set_experiment(experiment_name)
         self.run = mlflow.start_run(run_name=run_name)
 
-    def log_hyperparameters(self, params: Dict[str, Any]) -> None:
+    def log_config(self, params: Dict[str, Any]) -> None:
         mlflow.log_params(params)
 
     def log_metric(self, name: str, value: float, step: int) -> None:
