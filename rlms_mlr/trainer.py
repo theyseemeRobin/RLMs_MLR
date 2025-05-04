@@ -185,7 +185,7 @@ class Trainer:
             self,
             batch: Batch,
     ) -> Batch:
-        batch.to_device(self.model.device)
+        batch = batch.to(device=self.model.device, non_blocking=True)
         if self.augmentation_pipeline:
             batch = self.augmentation_pipeline(batch)
         return batch
@@ -205,7 +205,7 @@ class Trainer:
 
                 batch_prepared = self._prepare_batch(batch)
                 with autocast("cuda", enabled=self.use_amp):
-                    loss = self.model.compute_loss(**batch_prepared.inputs, **batch_prepared.targets)
+                    loss = self.model.compute_loss(batch_prepared)
                 self.scaler.scale(loss).backward()
                 if self.gradient_clip_norm:
                     self.scaler.unscale_(self.optimizer)

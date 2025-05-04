@@ -1,8 +1,10 @@
 import logging
-from typing import Dict, Union, Optional
+from typing import Dict, Union, Optional, Iterator
 
 import torch
 from torch.utils.data import DataLoader, Dataset
+
+from rlms_mlr.data.dataset import Batch
 
 
 class DataModule:
@@ -97,7 +99,7 @@ class DataModule:
             **merged_kwargs,
         )
 
-    def train_dataloader(self, **data_loader_kwargs) -> Optional[DataLoader]:
+    def train_dataloader(self, **data_loader_kwargs) -> Optional[Iterator[Batch]]:
         """
         Create a DataLoader for the training dataset.
 
@@ -106,7 +108,7 @@ class DataModule:
         """
         return self._make_data_loader(self.train_dataset, "train_dataloader", **data_loader_kwargs)
 
-    def val_dataloader(self, **data_loader_kwargs) -> Optional[DataLoader]:
+    def val_dataloader(self, **data_loader_kwargs) -> Optional[Iterator[Batch]]:
         """
         Create a DataLoader for the validation dataset.
 
@@ -115,7 +117,7 @@ class DataModule:
         """
         return self._make_data_loader(self.val_dataset, "val_dataloader", **data_loader_kwargs)
 
-    def test_dataloader(self, **data_loader_kwargs) -> Optional[DataLoader]:
+    def test_dataloader(self, **data_loader_kwargs) -> Optional[Iterator[Batch]]:
         """
         Create a DataLoader for the test dataset.
 

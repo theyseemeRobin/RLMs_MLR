@@ -1,43 +1,38 @@
 from abc import ABC, abstractmethod
-from collections import UserDict
-from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Dict
+from typing import Mapping, Union
 import torch
 from torch.utils.data import Dataset
 
 from rlms_mlr.downloaders.base_downloader import Downloader
 from rlms_mlr.utils.file_utils import get_cache_dir
 
-@dataclass
-class Batch(UserDict):
+
+class Batch(dict):
     """
-    A data class to represent a batch of data. This class behaves like a dictionary,
-    allowing for dictionary-like operations, while also storing inputs and targets separately.
+    Any dict whose values are torch.Tensors and keys are strings. Values can also be retrieved as attributes. Since
+    this is a dict, torch dataloader will batchify it automatically.
 
-    Attributes:
-        inputs: A dictionary of input tensors, where keys are the names of the inputs and values are the tensors.
-        targets: A dictionary of target tensors, where keys are the names of the targets and values are the tensors.
+    Examples:
+        >>> batch = Batch(images=torch.randn(2, 3, 224, 224), labels=torch.tensor([0, 1]))
+        >>> batch['images'].shape # torch.Size([2, 3, 224, 224])
+        >>> batch.images.shape    # torch.Size([2, 3, 224, 224])
     """
-    inputs: Dict[str, torch.Tensor] = field(default_factory=dict)
-    targets: Dict[str, torch.Tensor] = field(default_factory=dict)
 
-    def __post_init__(self):
-        # Initialize the underlying dictionary with inputs and targets
-        self.data = {'inputs': self.inputs, 'targets': self.targets}
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
 
-    def to_device(self, device: str):
-        """
-        Move the inputs and targets to the specified device.
+    def __getitem__(self, key: str) -> torch.Tensor:
+        return super().__getitem__(key)
 
-        Args:
-            device: The device to move the data to (e.g., 'cuda' or 'cpu').
-        """
-        for key in self.inputs:
-            self.inputs[key] = self.inputs[key].to(device)
-        for key in self.targets:
-            self.targets[key] = self.targets[key].to(device)
+    def keys(self) -> Mapping[str, torch.Tensor].keys:
+        return super().keys()
 
+    def items(self) -> Mapping[str, torch.Tensor].items:
+        return super().items()
+
+    def to(self, device: Union[str, torch.device], **kwargs) -> 'Batch':
+        return self.__class__(**{key: value.to(device, **kwargs) for key, value in self.items()})
 
 class LocalDataset(Dataset, ABC):
     """
@@ -84,4 +79,6 @@ class LocalDataset(Dataset, ABC):
         Returns:
             A batch of data.
         """
+        # while this is technically not a batch but a sample, torch loaders will batchify it, since Batch is a dict
+        # and torch loaders will batchify dicts
         ...
