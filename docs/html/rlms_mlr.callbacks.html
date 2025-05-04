@@ -1,0 +1,812 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>rlms_mlr.callbacks package &mdash; R.L.M.&#39;s Machine Learning Recipe 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=7026087e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="rlms_mlr.data package" href="rlms_mlr.data.html" />
+    <link rel="prev" title="rlms_mlr.augmentation package" href="rlms_mlr.augmentation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            R.L.M.'s Machine Learning Recipe
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="rlms_mlr.html">RLMs_MLR</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="rlms_mlr.augmentation.html">rlms_mlr.augmentation package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">rlms_mlr.callbacks package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Callback"><code class="docutils literal notranslate"><span class="pre">Callback</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Callback.on_epoch_end"><code class="docutils literal notranslate"><span class="pre">Callback.on_epoch_end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Callback.on_epoch_start"><code class="docutils literal notranslate"><span class="pre">Callback.on_epoch_start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Callback.on_train_batch_end"><code class="docutils literal notranslate"><span class="pre">Callback.on_train_batch_end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Callback.on_train_batch_start"><code class="docutils literal notranslate"><span class="pre">Callback.on_train_batch_start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Callback.on_train_end"><code class="docutils literal notranslate"><span class="pre">Callback.on_train_end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Callback.on_train_start"><code class="docutils literal notranslate"><span class="pre">Callback.on_train_start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Callback.on_validation_batch_end"><code class="docutils literal notranslate"><span class="pre">Callback.on_validation_batch_end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Callback.on_validation_batch_start"><code class="docutils literal notranslate"><span class="pre">Callback.on_validation_batch_start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Callback.on_validation_end"><code class="docutils literal notranslate"><span class="pre">Callback.on_validation_end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Callback.on_validation_start"><code class="docutils literal notranslate"><span class="pre">Callback.on_validation_start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Callback.priority"><code class="docutils literal notranslate"><span class="pre">Callback.priority</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackList"><code class="docutils literal notranslate"><span class="pre">CallbackList</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackList.add_callback"><code class="docutils literal notranslate"><span class="pre">CallbackList.add_callback()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackList.callback_all"><code class="docutils literal notranslate"><span class="pre">CallbackList.callback_all()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackList.on_epoch_end"><code class="docutils literal notranslate"><span class="pre">CallbackList.on_epoch_end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackList.on_epoch_start"><code class="docutils literal notranslate"><span class="pre">CallbackList.on_epoch_start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackList.on_train_batch_end"><code class="docutils literal notranslate"><span class="pre">CallbackList.on_train_batch_end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackList.on_train_batch_start"><code class="docutils literal notranslate"><span class="pre">CallbackList.on_train_batch_start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackList.on_train_end"><code class="docutils literal notranslate"><span class="pre">CallbackList.on_train_end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackList.on_train_start"><code class="docutils literal notranslate"><span class="pre">CallbackList.on_train_start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackList.on_validation_batch_end"><code class="docutils literal notranslate"><span class="pre">CallbackList.on_validation_batch_end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackList.on_validation_batch_start"><code class="docutils literal notranslate"><span class="pre">CallbackList.on_validation_batch_start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackList.on_validation_end"><code class="docutils literal notranslate"><span class="pre">CallbackList.on_validation_end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackList.on_validation_start"><code class="docutils literal notranslate"><span class="pre">CallbackList.on_validation_start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackList.remove_callback"><code class="docutils literal notranslate"><span class="pre">CallbackList.remove_callback()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackList.sort_callbacks"><code class="docutils literal notranslate"><span class="pre">CallbackList.sort_callbacks()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn"><code class="docutils literal notranslate"><span class="pre">CallbackReturn</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn.stop_training"><code class="docutils literal notranslate"><span class="pre">CallbackReturn.stop_training</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">CallbackReturn.stop_training</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn.update"><code class="docutils literal notranslate"><span class="pre">CallbackReturn.update()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Logs"><code class="docutils literal notranslate"><span class="pre">Logs</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Logs.eval_loss"><code class="docutils literal notranslate"><span class="pre">Logs.eval_loss</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Logs.extra"><code class="docutils literal notranslate"><span class="pre">Logs.extra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1"><code class="docutils literal notranslate"><span class="pre">Logs.eval_loss</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2"><code class="docutils literal notranslate"><span class="pre">Logs.extra</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Logs.from_dict"><code class="docutils literal notranslate"><span class="pre">Logs.from_dict()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Logs.items"><code class="docutils literal notranslate"><span class="pre">Logs.items()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState"><code class="docutils literal notranslate"><span class="pre">TrainerState</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState.model"><code class="docutils literal notranslate"><span class="pre">TrainerState.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState.optimizer"><code class="docutils literal notranslate"><span class="pre">TrainerState.optimizer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState.total_epochs"><code class="docutils literal notranslate"><span class="pre">TrainerState.total_epochs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState.total_training_batches"><code class="docutils literal notranslate"><span class="pre">TrainerState.total_training_batches</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState.current_epoch"><code class="docutils literal notranslate"><span class="pre">TrainerState.current_epoch</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState.current_batch"><code class="docutils literal notranslate"><span class="pre">TrainerState.current_batch</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState.stop_training"><code class="docutils literal notranslate"><span class="pre">TrainerState.stop_training</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState.logs"><code class="docutils literal notranslate"><span class="pre">TrainerState.logs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3"><code class="docutils literal notranslate"><span class="pre">TrainerState.current_batch</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4"><code class="docutils literal notranslate"><span class="pre">TrainerState.current_epoch</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5"><code class="docutils literal notranslate"><span class="pre">TrainerState.logs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6"><code class="docutils literal notranslate"><span class="pre">TrainerState.model</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7"><code class="docutils literal notranslate"><span class="pre">TrainerState.optimizer</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8"><code class="docutils literal notranslate"><span class="pre">TrainerState.stop_training</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9"><code class="docutils literal notranslate"><span class="pre">TrainerState.total_epochs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10"><code class="docutils literal notranslate"><span class="pre">TrainerState.total_training_batches</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#rlms_mlr.callbacks.early_stopping.EarlyStoppingCallback"><code class="docutils literal notranslate"><span class="pre">EarlyStoppingCallback</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.early_stopping.EarlyStoppingCallback.on_epoch_end"><code class="docutils literal notranslate"><span class="pre">EarlyStoppingCallback.on_epoch_end()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#rlms_mlr.callbacks.logging.LoggerCallback"><code class="docutils literal notranslate"><span class="pre">LoggerCallback</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.logging.LoggerCallback.on_epoch_end"><code class="docutils literal notranslate"><span class="pre">LoggerCallback.on_epoch_end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.logging.LoggerCallback.on_train_end"><code class="docutils literal notranslate"><span class="pre">LoggerCallback.on_train_end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.logging.LoggerCallback.on_train_start"><code class="docutils literal notranslate"><span class="pre">LoggerCallback.on_train_start()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#rlms_mlr.callbacks.progress_bar.RichProgressCallback"><code class="docutils literal notranslate"><span class="pre">RichProgressCallback</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.progress_bar.RichProgressCallback.on_train_batch_end"><code class="docutils literal notranslate"><span class="pre">RichProgressCallback.on_train_batch_end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.progress_bar.RichProgressCallback.on_train_end"><code class="docutils literal notranslate"><span class="pre">RichProgressCallback.on_train_end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.progress_bar.RichProgressCallback.on_train_start"><code class="docutils literal notranslate"><span class="pre">RichProgressCallback.on_train_start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.progress_bar.RichProgressCallback.priority"><code class="docutils literal notranslate"><span class="pre">RichProgressCallback.priority</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#rlms_mlr.callbacks.progress_bar.TqdmProgressCallback"><code class="docutils literal notranslate"><span class="pre">TqdmProgressCallback</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.progress_bar.TqdmProgressCallback.on_train_batch_end"><code class="docutils literal notranslate"><span class="pre">TqdmProgressCallback.on_train_batch_end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.progress_bar.TqdmProgressCallback.on_train_end"><code class="docutils literal notranslate"><span class="pre">TqdmProgressCallback.on_train_end()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.progress_bar.TqdmProgressCallback.on_train_start"><code class="docutils literal notranslate"><span class="pre">TqdmProgressCallback.on_train_start()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.callbacks.progress_bar.TqdmProgressCallback.priority"><code class="docutils literal notranslate"><span class="pre">TqdmProgressCallback.priority</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rlms_mlr.data.html">rlms_mlr.data package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rlms_mlr.downloaders.html">rlms_mlr.downloaders package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rlms_mlr.loggers.html">rlms_mlr.loggers package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rlms_mlr.models.html">rlms_mlr.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rlms_mlr.utils.html">rlms_mlr.utils package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rlms_mlr.trainer.html">rlms_mlr.trainer module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">R.L.M.'s Machine Learning Recipe</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="rlms_mlr.html">RLMs_MLR</a></li>
+      <li class="breadcrumb-item active">rlms_mlr.callbacks package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/rlms_mlr.callbacks.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-rlms_mlr.callbacks.base_callback">
+<span id="rlms-mlr-callbacks-package"></span><h1>rlms_mlr.callbacks package<a class="headerlink" href="#module-rlms_mlr.callbacks.base_callback" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.Callback">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rlms_mlr.callbacks.base_callback.</span></span><span class="sig-name descname"><span class="pre">Callback</span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#Callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.Callback" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Base class for all callbacks. Callbacks are used to hook into the training process and perform actions at various
+stages of training. Each callback can define its own priority, which determines the order in which they are called
+when multiple callbacks are used in a CallbackList.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.Callback.on_epoch_end">
+<span class="sig-name descname"><span class="pre">on_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#Callback.on_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.Callback.on_epoch_end" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the end of each epoch.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.Callback.on_epoch_start">
+<span class="sig-name descname"><span class="pre">on_epoch_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#Callback.on_epoch_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.Callback.on_epoch_start" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the start of each epoch.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.Callback.on_train_batch_end">
+<span class="sig-name descname"><span class="pre">on_train_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#Callback.on_train_batch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.Callback.on_train_batch_end" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the end of each training batch.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.Callback.on_train_batch_start">
+<span class="sig-name descname"><span class="pre">on_train_batch_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#Callback.on_train_batch_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.Callback.on_train_batch_start" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the start of each training batch.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.Callback.on_train_end">
+<span class="sig-name descname"><span class="pre">on_train_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#Callback.on_train_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.Callback.on_train_end" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the end of training.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.Callback.on_train_start">
+<span class="sig-name descname"><span class="pre">on_train_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#Callback.on_train_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.Callback.on_train_start" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the start of training.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.Callback.on_validation_batch_end">
+<span class="sig-name descname"><span class="pre">on_validation_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#Callback.on_validation_batch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.Callback.on_validation_batch_end" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the end of each validation batch.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.Callback.on_validation_batch_start">
+<span class="sig-name descname"><span class="pre">on_validation_batch_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#Callback.on_validation_batch_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.Callback.on_validation_batch_start" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the start of each validation batch.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.Callback.on_validation_end">
+<span class="sig-name descname"><span class="pre">on_validation_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#Callback.on_validation_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.Callback.on_validation_end" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the end of validation.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.Callback.on_validation_start">
+<span class="sig-name descname"><span class="pre">on_validation_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#Callback.on_validation_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.Callback.on_validation_start" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the start of validation.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.Callback.priority">
+<span class="sig-name descname"><span class="pre">priority</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.Callback.priority" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.CallbackList">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rlms_mlr.callbacks.base_callback.</span></span><span class="sig-name descname"><span class="pre">CallbackList</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callbacks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Callback" title="rlms_mlr.callbacks.base_callback.Callback"><span class="pre">Callback</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#CallbackList"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.CallbackList" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Callback" title="rlms_mlr.callbacks.base_callback.Callback"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callback</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.CallbackList.add_callback">
+<span class="sig-name descname"><span class="pre">add_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Callback" title="rlms_mlr.callbacks.base_callback.Callback"><span class="pre">Callback</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#CallbackList.add_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.CallbackList.add_callback" title="Link to this definition"></a></dt>
+<dd><p>Add a callback to the list of callbacks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback</strong> – A Callback instance to add.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.CallbackList.callback_all">
+<span class="sig-name descname"><span class="pre">callback_all</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#CallbackList.callback_all"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.CallbackList.callback_all" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.CallbackList.on_epoch_end">
+<span class="sig-name descname"><span class="pre">on_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#CallbackList.on_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.CallbackList.on_epoch_end" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the end of each epoch.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.CallbackList.on_epoch_start">
+<span class="sig-name descname"><span class="pre">on_epoch_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#CallbackList.on_epoch_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.CallbackList.on_epoch_start" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the start of each epoch.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.CallbackList.on_train_batch_end">
+<span class="sig-name descname"><span class="pre">on_train_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#CallbackList.on_train_batch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.CallbackList.on_train_batch_end" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the end of each training batch.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.CallbackList.on_train_batch_start">
+<span class="sig-name descname"><span class="pre">on_train_batch_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#CallbackList.on_train_batch_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.CallbackList.on_train_batch_start" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the start of each training batch.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.CallbackList.on_train_end">
+<span class="sig-name descname"><span class="pre">on_train_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#CallbackList.on_train_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.CallbackList.on_train_end" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the end of training.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.CallbackList.on_train_start">
+<span class="sig-name descname"><span class="pre">on_train_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#CallbackList.on_train_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.CallbackList.on_train_start" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the start of training.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.CallbackList.on_validation_batch_end">
+<span class="sig-name descname"><span class="pre">on_validation_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#CallbackList.on_validation_batch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.CallbackList.on_validation_batch_end" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the end of each validation batch.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.CallbackList.on_validation_batch_start">
+<span class="sig-name descname"><span class="pre">on_validation_batch_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#CallbackList.on_validation_batch_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.CallbackList.on_validation_batch_start" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the start of each validation batch.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.CallbackList.on_validation_end">
+<span class="sig-name descname"><span class="pre">on_validation_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#CallbackList.on_validation_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.CallbackList.on_validation_end" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the end of validation.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.CallbackList.on_validation_start">
+<span class="sig-name descname"><span class="pre">on_validation_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#CallbackList.on_validation_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.CallbackList.on_validation_start" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the start of validation.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.CallbackList.remove_callback">
+<span class="sig-name descname"><span class="pre">remove_callback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">callback_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#CallbackList.remove_callback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.CallbackList.remove_callback" title="Link to this definition"></a></dt>
+<dd><p>Remove a callback from the list of callbacks.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>callback_type</strong> – Type of the callback to remove.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.CallbackList.sort_callbacks">
+<span class="sig-name descname"><span class="pre">sort_callbacks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#CallbackList.sort_callbacks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.CallbackList.sort_callbacks" title="Link to this definition"></a></dt>
+<dd><p>Sort the callbacks in the list based on their priority.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.CallbackReturn">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rlms_mlr.callbacks.base_callback.</span></span><span class="sig-name descname"><span class="pre">CallbackReturn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">stop_training</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#CallbackReturn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Return object from callbacks.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.CallbackReturn.stop_training">
+<span class="sig-name descname"><span class="pre">stop_training</span></span><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.CallbackReturn.stop_training" title="Link to this definition"></a></dt>
+<dd><p>bool: Boolean indicating whether to stop training or not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">stop_training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.CallbackReturn.update">
+<span class="sig-name descname"><span class="pre">update</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">other</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#CallbackReturn.update"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.CallbackReturn.update" title="Link to this definition"></a></dt>
+<dd><p>Update the current CallbackReturn object with another one.
+:param other: Another CallbackReturn object.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.Logs">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rlms_mlr.callbacks.base_callback.</span></span><span class="sig-name descname"><span class="pre">Logs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">eval_loss</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">extra</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#Logs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.Logs" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Logs object to store training and evaluation losses. Arbitrary extra data can be added as well.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.Logs.eval_loss">
+<span class="sig-name descname"><span class="pre">eval_loss</span></span><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.Logs.eval_loss" title="Link to this definition"></a></dt>
+<dd><p>Optional[float]: Evaluation loss. This is used in various callbacks. Not providing this value may
+stop some callbacks from working (e.g. EarlyStopping).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.Logs.extra">
+<span class="sig-name descname"><span class="pre">extra</span></span><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.Logs.extra" title="Link to this definition"></a></dt>
+<dd><p>Dict[str, Any]: Arbitrary values that can be added to the logs (e.g., training loss).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[str, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">eval_loss</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">extra</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.Logs.from_dict">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Logs" title="rlms_mlr.callbacks.base_callback.Logs"><span class="pre">Logs</span></a></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#Logs.from_dict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.Logs.from_dict" title="Link to this definition"></a></dt>
+<dd><p>Create a Logs object from a dictionary. The dictionary keys should match the attributes of the Logs class.
+:param data: A dictionary containing the logs data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Logs object.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.Logs.items">
+<span class="sig-name descname"><span class="pre">items</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#Logs.items"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.Logs.items" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.TrainerState">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rlms_mlr.callbacks.base_callback.</span></span><span class="sig-name descname"><span class="pre">TrainerState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_epochs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">total_training_batches</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_epoch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current_batch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_training</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Logs" title="rlms_mlr.callbacks.base_callback.Logs"><span class="pre">Logs</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rlms_mlr/callbacks/base_callback.html#TrainerState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Context object passed to callbacks during training.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.TrainerState.model">
+<span class="sig-name descname"><span class="pre">model</span></span><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.TrainerState.model" title="Link to this definition"></a></dt>
+<dd><p>The model being trained.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.modules.module.Module</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.TrainerState.optimizer">
+<span class="sig-name descname"><span class="pre">optimizer</span></span><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.TrainerState.optimizer" title="Link to this definition"></a></dt>
+<dd><p>The optimizer used for training.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.optim.optimizer.Optimizer</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.TrainerState.total_epochs">
+<span class="sig-name descname"><span class="pre">total_epochs</span></span><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.TrainerState.total_epochs" title="Link to this definition"></a></dt>
+<dd><p>Total number of epochs to train.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.TrainerState.total_training_batches">
+<span class="sig-name descname"><span class="pre">total_training_batches</span></span><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.TrainerState.total_training_batches" title="Link to this definition"></a></dt>
+<dd><p>Total number of training batches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.TrainerState.current_epoch">
+<span class="sig-name descname"><span class="pre">current_epoch</span></span><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.TrainerState.current_epoch" title="Link to this definition"></a></dt>
+<dd><p>Current epoch number.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.TrainerState.current_batch">
+<span class="sig-name descname"><span class="pre">current_batch</span></span><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.TrainerState.current_batch" title="Link to this definition"></a></dt>
+<dd><p>Current batch number.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.TrainerState.stop_training">
+<span class="sig-name descname"><span class="pre">stop_training</span></span><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.TrainerState.stop_training" title="Link to this definition"></a></dt>
+<dd><p>Boolean indicating whether to stop training or not.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.base_callback.TrainerState.logs">
+<span class="sig-name descname"><span class="pre">logs</span></span><a class="headerlink" href="#rlms_mlr.callbacks.base_callback.TrainerState.logs" title="Link to this definition"></a></dt>
+<dd><p>Logs object containing training and evaluation losses.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Logs" title="rlms_mlr.callbacks.base_callback.Logs">rlms_mlr.callbacks.base_callback.Logs</a> | None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">current_batch</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">current_epoch</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">logs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Logs" title="rlms_mlr.callbacks.base_callback.Logs"><span class="pre">Logs</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">model</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Module</span></em><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id7">
+<span class="sig-name descname"><span class="pre">optimizer</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Optimizer</span></em><a class="headerlink" href="#id7" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id8">
+<span class="sig-name descname"><span class="pre">stop_training</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">bool</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">False</span></em><a class="headerlink" href="#id8" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id9">
+<span class="sig-name descname"><span class="pre">total_epochs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#id9" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id10">
+<span class="sig-name descname"><span class="pre">total_training_batches</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#id10" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-rlms_mlr.callbacks.early_stopping">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.early_stopping.EarlyStoppingCallback">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rlms_mlr.callbacks.early_stopping.</span></span><span class="sig-name descname"><span class="pre">EarlyStoppingCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">patience</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rlms_mlr/callbacks/early_stopping.html#EarlyStoppingCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.early_stopping.EarlyStoppingCallback" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Callback" title="rlms_mlr.callbacks.base_callback.Callback"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callback</span></code></a></p>
+<p>Early stopping callback to stop training when the validation loss does not improve for a given number of epochs.
+:param patience: Number of epochs with no improvement after which training will be stopped.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.early_stopping.EarlyStoppingCallback.on_epoch_end">
+<span class="sig-name descname"><span class="pre">on_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/early_stopping.html#EarlyStoppingCallback.on_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.early_stopping.EarlyStoppingCallback.on_epoch_end" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the end of each epoch.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-rlms_mlr.callbacks.logging">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.logging.LoggerCallback">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rlms_mlr.callbacks.logging.</span></span><span class="sig-name descname"><span class="pre">LoggerCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="rlms_mlr.loggers.html#rlms_mlr.loggers.base_logger.Logger" title="rlms_mlr.loggers.base_logger.Logger"><span class="pre">Logger</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_best_only</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rlms_mlr/callbacks/logging.html#LoggerCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.logging.LoggerCallback" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Callback" title="rlms_mlr.callbacks.base_callback.Callback"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callback</span></code></a></p>
+<p>Logs hyperparameters, metrics, and saves models via the provided Logger.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>logger</strong> – An implementation of the Logger interface.</p></li>
+<li><p><strong>params</strong> – Hyperparameters dict to log once at train start.</p></li>
+<li><p><strong>checkpoint_dir</strong> – Directory where checkpoints will be saved.</p></li>
+<li><p><strong>save_best_only</strong> – If True, only save when eval_loss improves.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.logging.LoggerCallback.on_epoch_end">
+<span class="sig-name descname"><span class="pre">on_epoch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/logging.html#LoggerCallback.on_epoch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.logging.LoggerCallback.on_epoch_end" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the end of each epoch.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.logging.LoggerCallback.on_train_end">
+<span class="sig-name descname"><span class="pre">on_train_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/logging.html#LoggerCallback.on_train_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.logging.LoggerCallback.on_train_end" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the end of training.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.logging.LoggerCallback.on_train_start">
+<span class="sig-name descname"><span class="pre">on_train_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.CallbackReturn" title="rlms_mlr.callbacks.base_callback.CallbackReturn"><span class="pre">CallbackReturn</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/logging.html#LoggerCallback.on_train_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.logging.LoggerCallback.on_train_start" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the start of training.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-rlms_mlr.callbacks.progress_bar">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.progress_bar.RichProgressCallback">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rlms_mlr.callbacks.progress_bar.</span></span><span class="sig-name descname"><span class="pre">RichProgressCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">bar_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rlms_mlr/callbacks/progress_bar.html#RichProgressCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.progress_bar.RichProgressCallback" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Callback" title="rlms_mlr.callbacks.base_callback.Callback"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callback</span></code></a></p>
+<p>Displays an enhanced progress bar using rich.progress.
+:param **bar_kwargs: Additional arguments to pass to rich.progress.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.progress_bar.RichProgressCallback.on_train_batch_end">
+<span class="sig-name descname"><span class="pre">on_train_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/progress_bar.html#RichProgressCallback.on_train_batch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.progress_bar.RichProgressCallback.on_train_batch_end" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the end of each training batch.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.progress_bar.RichProgressCallback.on_train_end">
+<span class="sig-name descname"><span class="pre">on_train_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/progress_bar.html#RichProgressCallback.on_train_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.progress_bar.RichProgressCallback.on_train_end" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the end of training.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.progress_bar.RichProgressCallback.on_train_start">
+<span class="sig-name descname"><span class="pre">on_train_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/progress_bar.html#RichProgressCallback.on_train_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.progress_bar.RichProgressCallback.on_train_start" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the start of training.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.progress_bar.RichProgressCallback.priority">
+<span class="sig-name descname"><span class="pre">priority</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#rlms_mlr.callbacks.progress_bar.RichProgressCallback.priority" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.progress_bar.TqdmProgressCallback">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rlms_mlr.callbacks.progress_bar.</span></span><span class="sig-name descname"><span class="pre">TqdmProgressCallback</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">bar_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rlms_mlr/callbacks/progress_bar.html#TqdmProgressCallback"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.progress_bar.TqdmProgressCallback" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#rlms_mlr.callbacks.base_callback.Callback" title="rlms_mlr.callbacks.base_callback.Callback"><code class="xref py py-class docutils literal notranslate"><span class="pre">Callback</span></code></a></p>
+<p>Displays a simple tqdm progress bar for training.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>**bar_kwargs</strong> – Additional arguments to pass to tqdm.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.progress_bar.TqdmProgressCallback.on_train_batch_end">
+<span class="sig-name descname"><span class="pre">on_train_batch_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/progress_bar.html#TqdmProgressCallback.on_train_batch_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.progress_bar.TqdmProgressCallback.on_train_batch_end" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the end of each training batch.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.progress_bar.TqdmProgressCallback.on_train_end">
+<span class="sig-name descname"><span class="pre">on_train_end</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/progress_bar.html#TqdmProgressCallback.on_train_end"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.progress_bar.TqdmProgressCallback.on_train_end" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the end of training.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.progress_bar.TqdmProgressCallback.on_train_start">
+<span class="sig-name descname"><span class="pre">on_train_start</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#rlms_mlr.callbacks.base_callback.TrainerState" title="rlms_mlr.callbacks.base_callback.TrainerState"><span class="pre">TrainerState</span></a></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/callbacks/progress_bar.html#TqdmProgressCallback.on_train_start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.callbacks.progress_bar.TqdmProgressCallback.on_train_start" title="Link to this definition"></a></dt>
+<dd><p>Hook into the training process. Called at the start of training.
+:param trainer_state: TrainerState object containing the current state of the training process.
+:param **kwargs: Additional keyword arguments that can be passed to the callback, if needed.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rlms_mlr.callbacks.progress_bar.TqdmProgressCallback.priority">
+<span class="sig-name descname"><span class="pre">priority</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#rlms_mlr.callbacks.progress_bar.TqdmProgressCallback.priority" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rlms_mlr.augmentation.html" class="btn btn-neutral float-left" title="rlms_mlr.augmentation package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rlms_mlr.data.html" class="btn btn-neutral float-right" title="rlms_mlr.data package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Robin Moret.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

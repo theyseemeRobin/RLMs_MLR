@@ -1,0 +1,181 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>rlms_mlr.utils package &mdash; R.L.M.&#39;s Machine Learning Recipe 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=7026087e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="rlms_mlr.trainer module" href="rlms_mlr.trainer.html" />
+    <link rel="prev" title="rlms_mlr.models package" href="rlms_mlr.models.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            R.L.M.'s Machine Learning Recipe
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="rlms_mlr.html">RLMs_MLR</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="rlms_mlr.augmentation.html">rlms_mlr.augmentation package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rlms_mlr.callbacks.html">rlms_mlr.callbacks package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rlms_mlr.data.html">rlms_mlr.data package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rlms_mlr.downloaders.html">rlms_mlr.downloaders package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rlms_mlr.loggers.html">rlms_mlr.loggers package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rlms_mlr.models.html">rlms_mlr.models package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">rlms_mlr.utils package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rlms_mlr.utils.config_resolvers.from_env_resolver"><code class="docutils literal notranslate"><span class="pre">from_env_resolver()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rlms_mlr.utils.config_resolvers.get_device_resolver"><code class="docutils literal notranslate"><span class="pre">get_device_resolver()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rlms_mlr.utils.config_resolvers.register_resolver"><code class="docutils literal notranslate"><span class="pre">register_resolver()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rlms_mlr.utils.file_utils.copy_file"><code class="docutils literal notranslate"><span class="pre">copy_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rlms_mlr.utils.file_utils.get_cache_dir"><code class="docutils literal notranslate"><span class="pre">get_cache_dir()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rlms_mlr.utils.hp_sampling.sample_hp"><code class="docutils literal notranslate"><span class="pre">sample_hp()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rlms_mlr.trainer.html">rlms_mlr.trainer module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">R.L.M.'s Machine Learning Recipe</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="rlms_mlr.html">RLMs_MLR</a></li>
+      <li class="breadcrumb-item active">rlms_mlr.utils package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/rlms_mlr.utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-rlms_mlr.utils.config_resolvers">
+<span id="rlms-mlr-utils-package"></span><h1>rlms_mlr.utils package<a class="headerlink" href="#module-rlms_mlr.utils.config_resolvers" title="Link to this heading"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="rlms_mlr.utils.config_resolvers.from_env_resolver">
+<span class="sig-prename descclassname"><span class="pre">rlms_mlr.utils.config_resolvers.</span></span><span class="sig-name descname"><span class="pre">from_env_resolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">env_var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/rlms_mlr/utils/config_resolvers.html#from_env_resolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.utils.config_resolvers.from_env_resolver" title="Link to this definition"></a></dt>
+<dd><p>Custom OmegaConf resolver to get environment variables.
+:param env_var: Name of the environment variable to retrieve.</p>
+<p>Returns: value of the environment variable</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="rlms_mlr.utils.config_resolvers.get_device_resolver">
+<span class="sig-prename descclassname"><span class="pre">rlms_mlr.utils.config_resolvers.</span></span><span class="sig-name descname"><span class="pre">get_device_resolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="reference internal" href="_modules/rlms_mlr/utils/config_resolvers.html#get_device_resolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.utils.config_resolvers.get_device_resolver" title="Link to this definition"></a></dt>
+<dd><p>Custom OmegaConf resolver to validate the device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>device</strong> – The device to use, either ‘cuda’ or ‘cpu’.</p>
+</dd>
+</dl>
+<p>Returns: The validated device string.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="rlms_mlr.utils.config_resolvers.register_resolver">
+<span class="sig-prename descclassname"><span class="pre">rlms_mlr.utils.config_resolvers.</span></span><span class="sig-name descname"><span class="pre">register_resolver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rlms_mlr/utils/config_resolvers.html#register_resolver"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.utils.config_resolvers.register_resolver" title="Link to this definition"></a></dt>
+<dd><p>Decorator to register a custom OmegaConf resolver.
+:param name: The name of the resolver to register.</p>
+<p>Returns: None</p>
+</dd></dl>
+
+<dl class="py function" id="module-rlms_mlr.utils.file_utils">
+<dt class="sig sig-object py" id="rlms_mlr.utils.file_utils.copy_file">
+<span class="sig-prename descclassname"><span class="pre">rlms_mlr.utils.file_utils.</span></span><span class="sig-name descname"><span class="pre">copy_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">source_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/utils/file_utils.html#copy_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.utils.file_utils.copy_file" title="Link to this definition"></a></dt>
+<dd><p>Copies a file from the current location to the desired destination. Creates the destination directory if it does
+not yet exist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>source_file</strong> (<em>str</em>) – Current location of the file.</p></li>
+<li><p><strong>destination_dir</strong> (<em>str</em>) – Destination location of the file.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="rlms_mlr.utils.file_utils.get_cache_dir">
+<span class="sig-prename descclassname"><span class="pre">rlms_mlr.utils.file_utils.</span></span><span class="sig-name descname"><span class="pre">get_cache_dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Path</span></span></span><a class="reference internal" href="_modules/rlms_mlr/utils/file_utils.html#get_cache_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.utils.file_utils.get_cache_dir" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function" id="module-rlms_mlr.utils.hp_sampling">
+<dt class="sig sig-object py" id="rlms_mlr.utils.hp_sampling.sample_hp">
+<span class="sig-prename descclassname"><span class="pre">rlms_mlr.utils.hp_sampling.</span></span><span class="sig-name descname"><span class="pre">sample_hp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trial</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Trial</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rlms_mlr/utils/hp_sampling.html#sample_hp"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.utils.hp_sampling.sample_hp" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<span class="target" id="module-rlms_mlr.utils"></span></section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rlms_mlr.models.html" class="btn btn-neutral float-left" title="rlms_mlr.models package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rlms_mlr.trainer.html" class="btn btn-neutral float-right" title="rlms_mlr.trainer module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Robin Moret.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

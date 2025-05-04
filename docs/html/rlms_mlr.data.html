@@ -1,0 +1,252 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>rlms_mlr.data package &mdash; R.L.M.&#39;s Machine Learning Recipe 0.0.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=7026087e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="rlms_mlr.downloaders package" href="rlms_mlr.downloaders.html" />
+    <link rel="prev" title="rlms_mlr.callbacks package" href="rlms_mlr.callbacks.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            R.L.M.'s Machine Learning Recipe
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="rlms_mlr.html">RLMs_MLR</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="rlms_mlr.augmentation.html">rlms_mlr.augmentation package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rlms_mlr.callbacks.html">rlms_mlr.callbacks package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">rlms_mlr.data package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#rlms_mlr.data.data_module.DataModule"><code class="docutils literal notranslate"><span class="pre">DataModule</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.data.data_module.DataModule.from_dataset"><code class="docutils literal notranslate"><span class="pre">DataModule.from_dataset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.data.data_module.DataModule.test_dataloader"><code class="docutils literal notranslate"><span class="pre">DataModule.test_dataloader()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.data.data_module.DataModule.train_dataloader"><code class="docutils literal notranslate"><span class="pre">DataModule.train_dataloader()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.data.data_module.DataModule.val_dataloader"><code class="docutils literal notranslate"><span class="pre">DataModule.val_dataloader()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#rlms_mlr.data.dataset.Batch"><code class="docutils literal notranslate"><span class="pre">Batch</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.data.dataset.Batch.inputs"><code class="docutils literal notranslate"><span class="pre">Batch.inputs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rlms_mlr.data.dataset.Batch.targets"><code class="docutils literal notranslate"><span class="pre">Batch.targets</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">Batch.inputs</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1"><code class="docutils literal notranslate"><span class="pre">Batch.targets</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#rlms_mlr.data.dataset.LocalDataset"><code class="docutils literal notranslate"><span class="pre">LocalDataset</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="rlms_mlr.downloaders.html">rlms_mlr.downloaders package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rlms_mlr.loggers.html">rlms_mlr.loggers package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rlms_mlr.models.html">rlms_mlr.models package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rlms_mlr.utils.html">rlms_mlr.utils package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rlms_mlr.trainer.html">rlms_mlr.trainer module</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">R.L.M.'s Machine Learning Recipe</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="rlms_mlr.html">RLMs_MLR</a></li>
+      <li class="breadcrumb-item active">rlms_mlr.data package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/rlms_mlr.data.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-rlms_mlr.data.data_module">
+<span id="rlms-mlr-data-package"></span><h1>rlms_mlr.data package<a class="headerlink" href="#module-rlms_mlr.data.data_module" title="Link to this heading"></a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="rlms_mlr.data.data_module.DataModule">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rlms_mlr.data.data_module.</span></span><span class="sig-name descname"><span class="pre">DataModule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_workers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">dataloader_kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rlms_mlr/data/data_module.html#DataModule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.data.data_module.DataModule" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>DataModule for handling train, val, and test datasets.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_dataset</strong> – The training dataset.</p></li>
+<li><p><strong>val_dataset</strong> – The validation dataset.</p></li>
+<li><p><strong>test_dataset</strong> – The test dataset.</p></li>
+<li><p><strong>batch_size</strong> – The batch size for the DataLoader.</p></li>
+<li><p><strong>num_workers</strong> – Number of workers for DataLoader (default: 4).</p></li>
+<li><p><strong>**dataloader_kwargs</strong> – Additional arguments used when constructing DataLoaders.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.data.data_module.DataModule.from_dataset">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_dataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_split</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_split</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_split</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_workers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">4</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split_seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">dataloader_kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#rlms_mlr.data.data_module.DataModule" title="rlms_mlr.data.data_module.DataModule"><span class="pre">DataModule</span></a></span></span><a class="reference internal" href="_modules/rlms_mlr/data/data_module.html#DataModule.from_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.data.data_module.DataModule.from_dataset" title="Link to this definition"></a></dt>
+<dd><p>Create a DataModule from a single dataset, splitting it into train, val, and test sets, if specified.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> – The dataset to split.</p></li>
+<li><p><strong>batch_size</strong> – The batch size for the DataLoader.</p></li>
+<li><p><strong>train_split</strong> – The proportion of the dataset to use for training (default: 0.8).</p></li>
+<li><p><strong>val_split</strong> – The proportion of the dataset to use for validation (default: 0.2).</p></li>
+<li><p><strong>test_split</strong> – The proportion of the dataset to use for testing (default: 0).</p></li>
+<li><p><strong>num_workers</strong> – Number of workers for DataLoader (default: 4).</p></li>
+<li><p><strong>split_seed</strong> – Seed for random splitting (default: 42).</p></li>
+<li><p><strong>**dataloader_kwargs</strong> – Additional arguments used when constructing DataLoaders.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.data.data_module.DataModule.test_dataloader">
+<span class="sig-name descname"><span class="pre">test_dataloader</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataLoader</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/data/data_module.html#DataModule.test_dataloader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.data.data_module.DataModule.test_dataloader" title="Link to this definition"></a></dt>
+<dd><p>Create a DataLoader for the test dataset.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.data.data_module.DataModule.train_dataloader">
+<span class="sig-name descname"><span class="pre">train_dataloader</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataLoader</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/data/data_module.html#DataModule.train_dataloader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.data.data_module.DataModule.train_dataloader" title="Link to this definition"></a></dt>
+<dd><p>Create a DataLoader for the training dataset.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="rlms_mlr.data.data_module.DataModule.val_dataloader">
+<span class="sig-name descname"><span class="pre">val_dataloader</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataLoader</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span></span><a class="reference internal" href="_modules/rlms_mlr/data/data_module.html#DataModule.val_dataloader"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.data.data_module.DataModule.val_dataloader" title="Link to this definition"></a></dt>
+<dd><p>Create a DataLoader for the validation dataset.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-rlms_mlr.data.dataset">
+<dt class="sig sig-object py" id="rlms_mlr.data.dataset.Batch">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rlms_mlr.data.dataset.</span></span><span class="sig-name descname"><span class="pre">Batch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">targets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rlms_mlr/data/dataset.html#Batch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.data.dataset.Batch" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A data class to represent a batch of data. This class is used to store the input and target data for training.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rlms_mlr.data.dataset.Batch.inputs">
+<span class="sig-name descname"><span class="pre">inputs</span></span><a class="headerlink" href="#rlms_mlr.data.dataset.Batch.inputs" title="Link to this definition"></a></dt>
+<dd><p>A dictionary of input tensors, where keys are the names of the inputs and values are the tensors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[str, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="rlms_mlr.data.dataset.Batch.targets">
+<span class="sig-name descname"><span class="pre">targets</span></span><a class="headerlink" href="#rlms_mlr.data.dataset.Batch.targets" title="Link to this definition"></a></dt>
+<dd><p>A dictionary of target tensors, where keys are the names of the targets and values are the tensors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[str, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">inputs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">targets</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="rlms_mlr.data.dataset.LocalDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">rlms_mlr.data.dataset.</span></span><span class="sig-name descname"><span class="pre">LocalDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">download_source</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">downloader</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="rlms_mlr.downloaders.html#rlms_mlr.downloaders.base_downloader.Downloader" title="rlms_mlr.downloaders.base_downloader.Downloader"><span class="pre">Downloader</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/rlms_mlr/data/dataset.html#LocalDataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#rlms_mlr.data.dataset.LocalDataset" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>Base class for local datasets. By providing a download source, the dataset can be downloaded and stored
+upon initialization. If the dataset is already present, it will be used directly.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>data_dir</strong> – The directory where the dataset is stored (will be relative to the cache dir  when using cache).</p></li>
+<li><p><strong>download_source</strong> – The source URL/token to download the dataset from.</p></li>
+<li><p><strong>downloader</strong> – Implementation of the downloader protocol.</p></li>
+<li><p><strong>use_cache</strong> – Whether to use the cache directory for storing the dataset. Cache directory is a system-dependent
+directory as determined by :func: <cite>rlms_mlr.utils.file_utils.get_cache_dir</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="rlms_mlr.callbacks.html" class="btn btn-neutral float-left" title="rlms_mlr.callbacks package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="rlms_mlr.downloaders.html" class="btn btn-neutral float-right" title="rlms_mlr.downloaders package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Robin Moret.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
