@@ -12,7 +12,7 @@ import sys
 sys.path.insert(0, os.path.abspath('../../rlms_mlr'))
 
 
-project = 'RLMs_MLR'
+project = "R.L.M.'s Machine Learning Recipe"
 copyright = '2025, Robin Moret'
 author = 'Robin Moret'
 release = '0.0.0'
@@ -29,10 +29,8 @@ extensions = [
 autodoc_default_options = {
     'members': True,
     'undoc-members': True,
-    "inherited-members": True,
     'show-inheritance': True,
 }
-autodoc_inherit_docstrings = True
 autosummary_generate = True
 templates_path = ['_templates']
 exclude_patterns = []
@@ -42,5 +40,10 @@ exclude_patterns = []
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
+html_theme_options = {
+    'navigation_depth': 4,
+    'collapse_navigation': True,
+    'sticky_navigation': True,
+}
 html_static_path = ['_static']

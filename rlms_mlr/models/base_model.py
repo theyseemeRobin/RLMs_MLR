@@ -10,6 +10,11 @@ from rlms_mlr.data.dataset import Batch
 
 
 class Metrics(ABC):
+    """
+    Base class for all metrics. Implementations should inherit from this class, and compute metrics based on the
+    predictions and ground truths. The metrics should be computed in the compute_metrics and return a dictionary of
+    metrics. For more structured types, consider using TypedDict to define the return type of compute_metrics.
+    """
     def __init__(
             self,
             predictions: torch.Tensor = torch.empty(0),
