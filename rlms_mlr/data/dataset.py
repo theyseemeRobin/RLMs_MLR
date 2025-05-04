@@ -25,6 +25,11 @@ class Batch(dict):
     def __getitem__(self, key: str) -> torch.Tensor:
         return super().__getitem__(key)
 
+    def __getattr__(self, key: str) -> torch.Tensor:
+        if super().__getattribute__(key) is not None:
+            return super().__getattribute__(key)
+        return self.__getitem__(key)
+
     def keys(self) -> Mapping[str, torch.Tensor].keys:
         return super().keys()
 
@@ -33,6 +38,7 @@ class Batch(dict):
 
     def to(self, device: Union[str, torch.device], **kwargs) -> 'Batch':
         return self.__class__(**{key: value.to(device, **kwargs) for key, value in self.items()})
+
 
 class LocalDataset(Dataset, ABC):
     """
