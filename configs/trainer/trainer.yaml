@@ -1,0 +1,5 @@
+defaults:
+    - model: cnn
+    - data_module: local_image_folder
+    - optimizer: adam
+_target_: rlms_mlr.trainer.Trainer

@@ -1,20 +1,28 @@
+import logging
+
 import hydra
 from hydra.utils import instantiate
 from hydra.core.config_store import ConfigStore
+from omegaconf import DictConfig, OmegaConf
 
-from rlms_mlr.trainer import TrainerConfig
+from rlms_mlr.callbacks.logging_callback import LoggerCallback
+from rlms_mlr.loggers.tensorboard_logger import TensorBoardLogger
+from rlms_mlr.loggers.terminal_grapher import StdOutGrapher
+from rlms_mlr.trainer import Trainer
 
 
 @hydra.main(config_path="../configs", config_name="config", version_base="1.2")
-def main(cfg: TrainerConfig):
+def main(cfg: DictConfig):
 
     # retrieve the hydra run dir
     out_dir = hydra.core.hydra_config.HydraConfig.get().runtime.output_dir
-    print(f"Output directory: {out_dir}")
+    logging.info(f"Output directory: {out_dir}")
 
-    trainer_cfg: TrainerConfig = instantiate(cfg)
-    trainer = trainer_cfg.get_trainer()
-    trainer.train()
+    trainer: Trainer = instantiate(cfg.trainer)
+    trainer.add_callback(LoggerCallback(TensorBoardLogger(cfg.log_dir), OmegaConf.to_container(cfg)))
+    trainer.add_callback(LoggerCallback(StdOutGrapher(['train_loss', 'val_loss', 'val_accuracy']),
+                                        OmegaConf.to_container(cfg)))
+    trainer.train(**cfg.train_kwargs)
 
 if __name__ == "__main__":
     main()

@@ -1,9 +1,12 @@
 defaults:
-    - dataset: dataset
-    - model: mlp
-    - optimizer: adamw
+    - trainer: trainer
 
+train_kwargs:
+    total_epochs: 50
+    use_amp: false
+    gradient_clip_norm: null
 
 hydra:
     run:
-        dir: results/${hydra:runtime.choices.dataset}/${hydra:runtime.choices.model}/${now:%Y-%m-%d_%H-%M-%S}
+        dir: results/${hydra:runtime.choices.trainer/data_module}/${hydra:runtime.choices.trainer/model}/${now:%Y-%m-%d_%H-%M-%S}
+log_dir: ${hydra:run.dir}

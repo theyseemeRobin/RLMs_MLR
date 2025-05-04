@@ -1,0 +1,11 @@
+_target_: rlms_mlr.data.mnist.MnistDataset
+root: data/mnist
+download: true
+transform:
+    _target_: torchvision.transforms.Compose
+    transforms:
+        - _target_: torchvision.transforms.Resize
+          size: [28, 28]
+        - _target_: torchvision.transforms.Grayscale
+          num_output_channels: 1
+        - _target_: torchvision.transforms.ToTensor
