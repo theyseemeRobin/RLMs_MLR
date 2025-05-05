@@ -65,3 +65,4 @@ class PlotextLogger(StdOutLogger):
 
         # 5. Render to terminal and throttle updates
         plt.show()
+        plt.close()
