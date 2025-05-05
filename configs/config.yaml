@@ -1,0 +1,9 @@
+defaults:
+    - dataset: dataset
+    - model: mlp
+    - optimizer: adamw
+
+
+hydra:
+    run:
+        dir: results/${hydra:runtime.choices.dataset}/${hydra:runtime.choices.model}/${now:%Y-%m-%d_%H-%M-%S}
