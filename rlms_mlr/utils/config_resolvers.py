@@ -1,4 +1,6 @@
 import logging
+
+import hydra
 from omegaconf import OmegaConf
 import dotenv
 import torch
@@ -56,3 +58,5 @@ def get_device_resolver(device: str) -> str:
         return "cpu"
     else:
         raise ValueError(f"Invalid device '{device}'. Must be 'cuda' or 'cpu'.")
+
+OmegaConf.register_new_resolver("get_method", hydra.utils.get_method)
