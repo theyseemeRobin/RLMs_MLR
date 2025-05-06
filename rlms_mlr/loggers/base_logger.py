@@ -84,12 +84,10 @@ class Logger(ABC):
     @abstractmethod
     def save_model(self, model: torch.nn.Module, path: Path) -> None:
         """
-        Save the model.
-
+        Save the model's state_dict to the specified path relative to the logger's log directory.
         Args:
-            *args: Positional arguments.
-            **kwargs: Keyword arguments.
-        Returns: None
+            model: The model to save.
+            path: The path where the model will be saved relative to the logger's log directory.
         """
         pass
 

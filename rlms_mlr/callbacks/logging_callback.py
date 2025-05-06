@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import Dict, Optional
 import os
 
@@ -36,8 +37,7 @@ class LoggerCallback(Callback):
         #     if not self.save_best_only or eval_loss < self.best_loss:
         #         self.best_loss = eval_loss
         #         os.makedirs(self.checkpoint_dir, exist_ok=True)
-        #         ckpt_path = os.path.join(self.checkpoint_dir, f'best_epoch_{trainer_state.current_epoch}.pt')
-        #         self.logger.save_model(trainer_state.model, ckpt_path)
+        self.logger.save_model(trainer_state.model, Path('models') / f"model_epoch_{trainer_state.current_epoch}.pth")
 
     def on_train_end(self, trainer_state: TrainerState, **kwargs) -> None:
         self.logger.close()

@@ -41,8 +41,10 @@ class TensorBoardLogger(Logger):
         self.writer.add_text('config', yaml_str, 0)
 
     def save_model(self, model: torch.nn.Module, path: Path) -> None:
-        torch.save(model.state_dict(), path)
-        self.writer.add_text('checkpoint', f'Saved model at {path}', 0)
+        model_path = self.writer.log_dir / path
+        model_path.parent.mkdir(parents=True, exist_ok=True)
+        torch.save(model.state_dict(), model_path)
+        self.writer.add_text('checkpoint', f'Saved model at {model_path}', 0)
 
     def close(self) -> None:
         """
