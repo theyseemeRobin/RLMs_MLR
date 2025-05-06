@@ -30,7 +30,7 @@ class ValidateCallback(Callback):
         trainer_state.logs.update({f"val_{k}": v for k, v in metrics.compute_metrics().items()})
 
 class TestCallback(Callback):
-    def on_epoch_start(self, trainer_state: TrainerState, **kwargs) -> None:
+    def on_train_end(self, trainer_state: TrainerState, **kwargs) -> None:
         """
         Evaluate the model on the validation set at the end of each epoch.
         """
