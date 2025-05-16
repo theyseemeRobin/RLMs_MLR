@@ -12,7 +12,6 @@ dependencies = [
     "mlflow>=2.22.0",
     "platformdirs>=4.3.7",
     "plotext>=5.3.2",
-    "psycopg2>=2.9.10",
     "pytest>=8.3.5",
     "rich>=14.0.0",
     "sphinx>=8.1.3",
